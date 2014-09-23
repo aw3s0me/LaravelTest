@@ -11,7 +11,56 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
+// Route::get('/', function()
+// {
+// 	$name = 'Aleksandr';
+// 	return View::make('hello')->with('name', $name);
+// 	//return 'hello';
+// });
+
+
+Route::get('/', 'PagesController@home');
+
+Route::get('/about', 'PagesController@about');
+
+Route::get('/users', function() {
+    $users = User::all(); //Eloquent syntax like select *from users;
+    //$user = User::find(1);
+    //$users = DB::table('users')->get();
+    //$users = DB::table('users')->where('username', '!=', 'admin')->get();
+    //return $user->username; 
+    //return $users;
+
+    //return View::make('/users/index')->with('users', $users);
+
 });
+
+Route::get('/adduser', function() {
+    // $user = new User;
+    // $user->username = 'NewUser';
+    // $user->password = Hash::make('password');
+    // $user->save();
+    User::create([
+        'id' => 4,
+        'username' => 'AnotherUser',
+        'password' => Hash::make('1234')
+    ]);
+
+    return User::all();
+});
+
+Route::get('/firstuser', function() {
+    $user = DB::table('users')->find(1);
+    //dd($user); //die(var_dump($user)) SUGAR
+    return $user->username;
+    //return $user; //not string exception
+});
+
+Route::get('/select', function() {
+    $users = DB::select('select * from users');
+
+    return $users;
+    //dd($users);
+
+});
+    
