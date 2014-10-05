@@ -32,7 +32,13 @@ Route::get('/users', function() {
     //return $users;
 
     //return View::make('/users/index')->with('users', $users);
+    return View::make('users.index', ['users' => $users]);
+});
 
+Route::get('users/{username}', function($username) {
+    $user = User::whereUsername($username)->first();
+
+    return View::make('users.show', ['user' => $user]);
 });
 
 Route::get('/adduser', function() {
